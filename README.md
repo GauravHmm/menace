@@ -1,1 +1,1 @@
-# Discord-Bot
+# Discord-Bot for tic tac toe game
