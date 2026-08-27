@@ -38,3 +38,69 @@ def test_invalid_position():
 
     with pytest.raises(ValueError):
         board.make_move(-1)
+
+
+def test_x_wins():
+    board = Board()
+
+    board.make_move(0)  # X
+    board.make_move(3)  # O
+    board.make_move(1)  # X
+    board.make_move(4)  # O
+    board.make_move(2)  # X
+
+    assert board.winner() == "X"
+    assert board.is_draw() is False
+    assert board.is_game_over() is True
+
+
+def test_o_wins():
+    board = Board()
+
+    board.make_move(0)  # X
+    board.make_move(3)  # O
+    board.make_move(1)  # X
+    board.make_move(4)  # O
+    board.make_move(8)  # X
+    board.make_move(5)  # O
+
+    assert board.winner() == "O"
+    assert board.is_draw() is False
+    assert board.is_game_over() is True
+
+
+def test_diagonal_win():
+    board = Board()
+
+    board.make_move(0)  # X
+    board.make_move(1)  # O
+    board.make_move(4)  # X
+    board.make_move(2)  # O
+    board.make_move(8)  # X
+
+    assert board.winner() == "X"
+    assert board.is_game_over() is True
+
+
+def test_draw():
+    board = Board()
+
+    moves = [0, 1, 2, 4, 3, 5, 6, 8, 7]
+
+    for move in moves:
+        board.make_move(move)
+
+    assert board.winner() =='X'
+    assert board.is_draw() is False
+    assert board.is_game_over() is True
+
+
+def test_game_still_running():
+    board = Board()
+
+    board.make_move(0)
+    board.make_move(4)
+
+    assert board.winner() is None
+    assert board.is_draw() is False
+    assert board.is_game_over() is False
