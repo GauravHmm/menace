@@ -50,4 +50,11 @@ class Board:
 
         return False
 
-    
+    def serialize(self):
+        result=''
+        for cell in self.cells:
+            if cell is None:
+                result+='-'
+            else:
+                result+=cell
+        return result
