@@ -41,4 +41,11 @@ class Board:
             return True
         return False
 
-    
+    def is_game_over(self):
+        if self.winner():
+            return True
+
+        if self.is_draw():
+            return True
+
+        return False
