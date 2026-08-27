@@ -34,4 +34,11 @@ class Board:
                     return first
         return
 
+    def is_draw(self):
+        if self.winner():
+            return False
+        if(len(self.legal_moves())) == 0:
+            return True
+        return False
+
     
