@@ -118,3 +118,69 @@ def test_board_serialization():
     board.make_move(8)  # X
 
     assert board.serialize() == "X---O---X"
+
+def test_from_cells_creates_board():
+    cells = [
+        "X", None, None,
+        None, "O", None,
+        None, None, "X"
+    ]
+
+    board = Board.from_cells(cells, "O")
+
+    assert board.cells == tuple(cells)
+    assert board.current_player == "O"
+
+
+def test_from_cells_rejects_wrong_number_of_cells():
+    cells = [
+        "X", None, None,
+        None, "O", None,
+        None, None
+    ]
+
+    with pytest.raises(ValueError):
+        Board.from_cells(cells, "X")
+
+
+def test_from_cells_rejects_invalid_cell():
+    cells = [
+        "X", None, None,
+        None, "A", None,
+        None, None, "X"
+    ]
+
+    with pytest.raises(ValueError):
+        Board.from_cells(cells, "O")
+
+
+def test_from_cells_rejects_invalid_player():
+    cells = [
+        "X", None, None,
+        None, "O", None,
+        None, None, None
+    ]
+
+    with pytest.raises(ValueError):
+        Board.from_cells(cells, "A")
+
+
+def test_from_cells_copies_cells():
+    cells = [
+        "X", None, None,
+        None, "O", None,
+        None, None, "X"
+    ]
+
+    board = Board.from_cells(cells, "O")
+
+    # Change the original list
+    cells[0] = "O"
+
+    # The Board should still contain the original value
+    assert board.cells[0] == "X"
+def test_cells_are_read_only():
+    board = Board()
+
+    with pytest.raises(TypeError):
+        board.cells[0] = "X"
