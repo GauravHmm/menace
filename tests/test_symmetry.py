@@ -4,6 +4,10 @@ from menace.symmetry import (
     ROTATE_90,
     ROTATE_180,
     ROTATE_270,
+    REFLECT_HORIZONTAL,
+    REFLECT_VERTICAL,
+    REFLECT_MAIN_DIAGONAL,
+    REFLECT_ANTI_DIAGONAL,
     transform,
 )
 
@@ -114,4 +118,106 @@ def test_rotate_270_equals_three_rotate_90():
         )
 
     assert rotated_270.serialize() == rotated_90_three_times.serialize()
+
+def test_reflect_horizontal():
+    board = Board()
+
+    board.make_move(0)  # X
+    board.make_move(4)  # O
+
+    transformed = transform(board, REFLECT_HORIZONTAL)
+
+    assert transformed.serialize() == "----O-X--"
+
+
+def test_reflect_vertical():
+    board = Board()
+
+    board.make_move(0)  # X
+    board.make_move(4)  # O
+
+    transformed = transform(board, REFLECT_VERTICAL)
+
+    assert transformed.serialize() == "--X-O----"
+
+
+def test_reflect_main_diagonal():
+    board = Board()
+
+    board.make_move(1)  # X
+    board.make_move(3)  # O
+
+    transformed = transform(board, REFLECT_MAIN_DIAGONAL)
+
+    assert transformed.serialize() == "-O-X-----"
+
+
+def test_reflect_anti_diagonal():
+    board = Board()
+
+    board.make_move(0)  # X
+    board.make_move(1)  # O
+
+    transformed = transform(board, REFLECT_ANTI_DIAGONAL)
+
+    assert transformed.serialize() == "-----O--X"
+
+def test_horizontal_reflection_twice():
+    board = Board()
+
+    board.make_move(0)
+    board.make_move(4)
+    board.make_move(2)
+
+    transformed = transform(
+        transform(board, REFLECT_HORIZONTAL),
+        REFLECT_HORIZONTAL
+    )
+
+    assert transformed.serialize() == board.serialize()
+
+
+def test_vertical_reflection_twice():
+    board = Board()
+
+    board.make_move(0)
+    board.make_move(4)
+    board.make_move(2)
+
+    transformed = transform(
+        transform(board, REFLECT_VERTICAL),
+        REFLECT_VERTICAL
+    )
+
+    assert transformed.serialize() == board.serialize()
+
+
+def test_main_diagonal_reflection_twice():
+    board = Board()
+
+    board.make_move(1)
+    board.make_move(3)
+    board.make_move(8)
+
+    transformed = transform(
+        transform(board, REFLECT_MAIN_DIAGONAL),
+        REFLECT_MAIN_DIAGONAL
+    )
+
+    assert transformed.serialize() == board.serialize()
+
+
+def test_anti_diagonal_reflection_twice():
+    board = Board()
+
+    board.make_move(0)
+    board.make_move(4)
+    board.make_move(7)
+
+    transformed = transform(
+        transform(board, REFLECT_ANTI_DIAGONAL),
+        REFLECT_ANTI_DIAGONAL
+    )
+
+    assert transformed.serialize() == board.serialize()
 
