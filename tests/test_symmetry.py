@@ -9,6 +9,7 @@ from menace.symmetry import (
     REFLECT_MAIN_DIAGONAL,
     REFLECT_ANTI_DIAGONAL,
     transform,
+    TRANSFORMATIONS
 )
 
 
@@ -221,3 +222,8 @@ def test_anti_diagonal_reflection_twice():
 
     assert transformed.serialize() == board.serialize()
 
+def test_all_transformations_present():
+    assert len(TRANSFORMATIONS) == 8
+
+def test_all_transformations_are_unique():
+    assert len(set(TRANSFORMATIONS)) == 8
