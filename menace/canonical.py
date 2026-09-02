@@ -8,7 +8,7 @@ def canonicalize(board):
     for mapping in TRANSFORMATIONS:
         transformed = transform(board, mapping)
 
-        state = transformed.serialize() + transformed.current_player
+        state = transformed.serialize()
 
         if best_state is None or state < best_state:
             best_state = state
