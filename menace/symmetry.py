@@ -6,6 +6,13 @@ def transform(board,mapping):
     new_board=Board.from_cells(cells,board.current_player)
     return new_board
 
+def inverse_mapping(mapping):
+    inverse=[None]*9
+    for old_position in range(9):
+        new_position=mapping[old_position]
+        inverse[new_position]=old_position
+    return tuple(inverse)
+
 IDENTITY = (0, 1, 2, 3, 4, 5, 6, 7, 8)
 
 ROTATE_90 = (2, 5, 8, 1, 4, 7, 0, 3, 6)

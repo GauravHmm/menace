@@ -15,3 +15,4 @@ def canonicalize(board):
             best_mapping = mapping
 
     return best_state, best_mapping
+

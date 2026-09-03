@@ -67,3 +67,4 @@ def test_all_symmetries_have_same_canonical_state():
         state, _ = canonicalize(transformed)
 
         assert state == canonical_state
+

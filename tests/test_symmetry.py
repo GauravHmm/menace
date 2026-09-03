@@ -11,6 +11,8 @@ from menace.symmetry import (
     transform,
     TRANSFORMATIONS
 )
+from menace.symmetry import inverse_mapping
+
 
 
 def test_identity():
@@ -227,3 +229,28 @@ def test_all_transformations_present():
 
 def test_all_transformations_are_unique():
     assert len(set(TRANSFORMATIONS)) == 8
+
+def test_inverse_mapping():
+    mapping=ROTATE_90
+    inverse=inverse_mapping(mapping)
+
+    assert inverse == ROTATE_270
+
+def test_inverse_mapping_180():
+    mapping = ROTATE_180
+
+    inverse = inverse_mapping(mapping)
+
+    assert inverse == ROTATE_180
+
+def test_mapping_and_inverse_cancel_each_other():
+    mapping = ROTATE_90
+    inverse = inverse_mapping(mapping)
+
+    for position in range(9):
+        canonical_position = mapping[position]
+        actual_position = inverse[canonical_position]
+
+        assert actual_position == position
+
+        
