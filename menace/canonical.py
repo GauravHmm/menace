@@ -1,4 +1,4 @@
-from menace.symmetry import transform, TRANSFORMATIONS
+from menace.symmetry import transform, TRANSFORMATIONS,inverse_mapping
 
 
 def canonicalize(board):
@@ -15,4 +15,8 @@ def canonicalize(board):
             best_mapping = mapping
 
     return best_state, best_mapping
+
+def canonical_to_actual_move(canonical_move, mapping):
+    inverse = inverse_mapping(mapping)
+    return inverse[canonical_move]
 

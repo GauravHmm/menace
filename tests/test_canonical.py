@@ -1,6 +1,8 @@
 from menace.board import Board
 from menace.canonical import canonicalize
 from menace.symmetry import transform,TRANSFORMATIONS
+from menace.canonical import canonical_to_actual_move
+from menace.symmetry import ROTATE_90
 
 
 def test_empty_board_is_canonical():
@@ -68,3 +70,11 @@ def test_all_symmetries_have_same_canonical_state():
 
         assert state == canonical_state
 
+def test_canonical_move_to_actual_move():
+    mapping = ROTATE_90
+
+    canonical_move = 2
+
+    actual_move = canonical_to_actual_move(canonical_move, mapping)
+
+    assert actual_move == 0
