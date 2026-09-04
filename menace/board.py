@@ -80,3 +80,19 @@ class Board:
     @property
     def cells(self):
         return tuple(self._cells)
+
+    @classmethod
+    def from_serialized(cls,state, current_player):
+        if len(state)!=9:
+            raise ValueError("State must contain exactly 9 characters")
+        cells=[]
+
+        for cell in state:
+            if cell=='-':
+                cells.append(None)
+            elif cell in ("X",'O'):
+                cells.append(cell)
+            else:
+                raise ValueError("State can only contain X,O or -")
+
+        return cls.from_cells(cells,current_player)

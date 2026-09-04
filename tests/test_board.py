@@ -184,3 +184,40 @@ def test_cells_are_read_only():
 
     with pytest.raises(TypeError):
         board.cells[0] = "X"
+
+def test_from_serialized():
+    board = Board.from_serialized("XO--X----", "O")
+
+    assert board.cells == (
+        "X", "O", None,
+        None, "X", None,
+        None, None, None
+    )
+
+    assert board.current_player == "O"
+
+def test_serialize_and_from_serialized_are_inverse():
+    board = Board()
+
+    board.make_move(0)
+    board.make_move(4)
+    board.make_move(1)
+
+    state = board.serialize()
+
+    restored = Board.from_serialized(
+        state,
+        board.current_player
+    )
+
+    assert restored.serialize() == board.serialize()
+    assert restored.current_player == board.current_player
+
+def test_from_serialized_rejects_invalid_length():
+    with pytest.raises(ValueError):
+        Board.from_serialized("XO-", "X")
+
+
+def test_from_serialized_rejects_invalid_character():
+    with pytest.raises(ValueError):
+        Board.from_serialized("XO--A----", "X")
