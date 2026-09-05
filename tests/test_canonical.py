@@ -3,6 +3,7 @@ from menace.canonical import canonicalize
 from menace.symmetry import transform,TRANSFORMATIONS
 from menace.canonical import canonical_to_actual_move
 from menace.symmetry import ROTATE_90
+from menace.canonical import canonicalize, canonical_moves
 
 
 def test_empty_board_is_canonical():
@@ -78,3 +79,38 @@ def test_canonical_move_to_actual_move():
     actual_move = canonical_to_actual_move(canonical_move, mapping)
 
     assert actual_move == 0
+
+def test_empty_board_has_three_canonical_moves():
+    board = Board()
+
+    moves = canonical_moves(board)
+
+    assert moves == [0, 1, 4]
+
+
+def test_canonical_moves_are_legal():
+    board = Board()
+    board.make_move(0)
+
+    moves = canonical_moves(board)
+
+    for move in moves:
+        assert move in board.legal_moves()
+
+
+def test_canonical_moves_are_symmetry_distinct():
+    board = Board()
+
+    moves = canonical_moves(board)
+
+    assert len(moves) == 3
+
+def test_canonical_moves_do_not_include_occupied_positions():
+    board = Board()
+
+    board.make_move(0)
+
+    moves = canonical_moves(board)
+
+    assert 0 not in moves
+    assert all(move in board.legal_moves() for move in moves)
