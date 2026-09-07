@@ -64,3 +64,32 @@ def test_create_matchbox_for_third_menace_move():
     matchbox = create_matchbox(board)
 
     assert all(count == 2 for count in matchbox.beads.values())
+
+def test_choose_move_returns_available_move():
+    beads = {
+        0: 4,
+        1: 4,
+        4: 4
+    }
+
+    matchbox = Matchbox("---------", beads)
+
+    move = matchbox.choose_move()
+
+    assert move in beads
+
+def test_choose_move_never_selects_zero_bead_move():
+    beads = {
+        0: 0,
+        1: 4,
+        4: 4
+    }
+
+    matchbox = Matchbox("---------", beads)
+
+    for _ in range(100):
+        move = matchbox.choose_move()
+
+        assert move != 0
+
+    

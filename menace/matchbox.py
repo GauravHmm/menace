@@ -1,11 +1,19 @@
 from menace.board import Board
 from menace.canonical import canonicalize, canonical_moves
 from menace.menace_rules import initial_bead_count
+import random
 
 class Matchbox:
     def __init__(self,state,beads):
         self.state=state
         self.beads=beads
+
+    def choose_move(self):
+        moves=list(self.beads.keys())
+        weights=list(self.beads.values())
+
+        return random.choices(moves,weights=weights,k=1)[0]
+
 
 def create_matchbox(board):
     canonical_state,_=canonicalize(board)
