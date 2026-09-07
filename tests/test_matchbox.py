@@ -1,5 +1,6 @@
-from menace.matchbox import Matchbox
-
+from menace.board import Board
+from menace.matchbox import Matchbox, create_matchbox
+from menace.canonical import canonicalize, canonical_moves
 
 def test_matchbox_stores_state():
     matchbox = Matchbox(
@@ -34,5 +35,32 @@ def test_bead_count_is_applied_to_each_move():
     beads = {0: 2, 1: 2, 4: 2}
 
     matchbox = Matchbox("X-------O", beads)
+
+    assert all(count == 2 for count in matchbox.beads.values()) 
+
+def test_create_matchbox_for_second_menace_move():
+    board = Board()
+
+    board.make_move(0)  # MENACE
+    board.make_move(4)  # opponent
+
+    matchbox = create_matchbox(board)
+
+    assert matchbox.state == canonicalize(board)[0]
+
+    assert all(count == 3 for count in matchbox.beads.values())
+    assert all(move in canonical_moves(
+        Board.from_serialized(matchbox.state, board.current_player)
+    ) for move in matchbox.beads)
+
+def test_create_matchbox_for_third_menace_move():
+    board = Board()
+
+    board.make_move(0)  # MENACE
+    board.make_move(4)  # opponent
+    board.make_move(1)  # MENACE
+    board.make_move(8)  # opponent
+
+    matchbox = create_matchbox(board)
 
     assert all(count == 2 for count in matchbox.beads.values())
