@@ -13,6 +13,9 @@ class Matchbox:
         weights=list(self.beads.values())
 
         return random.choices(moves,weights=weights,k=1)[0]
+    def remove_bead(self,move):
+        self.beads[move]-=1
+        
 
 
 def create_matchbox(board):
@@ -28,8 +31,6 @@ def create_matchbox(board):
         beads[move]=bead_count
 
     return Matchbox(canonical_state,beads)
-
-
 
     
         

@@ -92,4 +92,34 @@ def test_choose_move_never_selects_zero_bead_move():
 
         assert move != 0
 
-    
+def test_remove_bead():
+    matchbox = Matchbox(
+        "---------",
+        {
+            0: 4,
+            1: 3,
+            4: 2
+        }
+    )
+
+    matchbox.remove_bead(1)
+
+    assert matchbox.beads[1] == 2
+
+def test_remove_bead_only_changes_selected_move():
+    matchbox = Matchbox(
+        "---------",
+        {
+            0: 4,
+            1: 3,
+            4: 2
+        }
+    )
+
+    matchbox.remove_bead(1)
+
+    assert matchbox.beads == {
+        0: 4,
+        1: 2,
+        4: 2
+    }
