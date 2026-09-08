@@ -123,3 +123,34 @@ def test_remove_bead_only_changes_selected_move():
         1: 2,
         4: 2
     }
+def test_add_beads():
+    matchbox = Matchbox(
+        "---------",
+        {
+            0: 4,
+            1: 3,
+            4: 2
+        }
+    )
+
+    matchbox.add_beads(1, 3)
+
+    assert matchbox.beads[1] == 6
+
+def test_add_beads_only_changes_selected_move():
+    matchbox = Matchbox(
+        "---------",
+        {
+            0: 4,
+            1: 3,
+            4: 2
+        }
+    )
+
+    matchbox.add_beads(1, 3)
+
+    assert matchbox.beads == {
+        0: 4,
+        1: 6,
+        4: 2
+    }

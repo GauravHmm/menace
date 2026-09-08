@@ -15,8 +15,9 @@ class Matchbox:
         return random.choices(moves,weights=weights,k=1)[0]
     def remove_bead(self,move):
         self.beads[move]-=1
-        
 
+    def add_beads(self,move, amount):
+        self.beads[move]+=amount
 
 def create_matchbox(board):
     canonical_state,_=canonicalize(board)
