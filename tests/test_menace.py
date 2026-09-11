@@ -52,3 +52,32 @@ def test_symmetric_boards_use_same_matchbox():
     assert matchbox1 is matchbox2
     assert len(menace.matchboxes) == 1
 
+def test_menace_can_generate_all_matchboxes():
+    menace = Menace()
+
+    menace.generate_matchboxes()
+
+    assert len(menace.matchboxes) == 304
+
+def test_generated_matchboxes_have_beads():
+    menace = Menace()
+
+    menace.generate_matchboxes()
+
+    for matchbox in menace.matchboxes.values():
+        assert len(matchbox.beads) > 0
+        assert all(count > 0 for count in matchbox.beads.values())
+
+def test_generated_initial_matchbox():
+    menace = Menace()
+
+    menace.generate_matchboxes()
+
+    matchbox = menace.matchboxes["---------"]
+
+    assert matchbox.beads == {
+        0: 4,
+        1: 4,
+        4: 4
+    }
+
