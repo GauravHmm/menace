@@ -15,14 +15,17 @@ class Menace:
         return self.matchboxes[canonical_state]
     
     def generate_matchboxes(self):
-        self._generate_matchboxes(Board())
+        visited=set()
+        self._generate_matchboxes(Board(),visited)
 
-    def _generate_matchboxes(self,board):
+    def _generate_matchboxes(self,board,visited):
+        canonical_state, _ = canonicalize(board)
+        if canonical_state in visited:
+            return
+        visited.add(canonical_state)
         if board.is_game_over():
             return
         if board.current_player == "X" and board.cells.count("X") < 4:
-            canonical_state,_=canonicalize(board)
-
             if canonical_state not in self.matchboxes:
                 matchbox=create_matchbox(board)
                 self.matchboxes[canonical_state]=matchbox
@@ -39,6 +42,6 @@ class Menace:
 
             next_board=Board.from_cells(cells,next_player)
 
-            self._generate_matchboxes(next_board)
+            self._generate_matchboxes(next_board,visited)
 
 

@@ -81,3 +81,22 @@ def test_generated_initial_matchbox():
         4: 4
     }
 
+def test_generation_does_not_revisit_same_state():
+    menace = Menace()
+
+    visited = set()
+    menace._generate_matchboxes(Board(), visited)
+
+    assert len(visited) > 0
+
+def test_generation_matchbox_distribution_valid():
+    menace=Menace()
+    x_moves={0:0,1:0,2:0,3:0}
+    menace.generate_matchboxes()
+    for matchbox in menace.matchboxes.values():
+        x_moves[matchbox.state.count("X")]+=1
+
+    assert x_moves[0]==1
+    assert x_moves[1]==12
+    assert x_moves[2]==108
+    assert x_moves[3]==183
