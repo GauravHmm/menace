@@ -1,4 +1,4 @@
-from menace.canonical import canonicalize
+from menace.canonical import canonicalize, canonical_to_actual_move
 from menace.matchbox import create_matchbox
 from menace.board import Board
 
@@ -43,5 +43,14 @@ class Menace:
             next_board=Board.from_cells(cells,next_player)
 
             self._generate_matchboxes(next_board,visited)
+
+    def choose_move(self,board):
+        _,mapping=canonicalize(board)
+        matchbox=self.get_matchbox(board)
+
+        canonical_move=matchbox.choose_move()
+        actual_move=canonical_to_actual_move(canonical_move,mapping)
+
+        return actual_move
 
 

@@ -1,5 +1,6 @@
 from menace.menace import Menace
 from menace.board import Board
+from menace.canonical import canonicalize, canonical_to_actual_move
 
 def test_menace_starts_with_no_matchboxes():
     menace = Menace()
@@ -100,3 +101,31 @@ def test_generation_matchbox_distribution_valid():
     assert x_moves[1]==12
     assert x_moves[2]==108
     assert x_moves[3]==183
+
+def test_menace_can_choose_move():
+    menace = Menace()
+    board = Board()
+
+    move = menace.choose_move(board)
+
+    assert move in board.legal_moves()
+
+def test_menace_maps_canonical_move_to_actual_move():
+    menace = Menace()
+
+    board = Board.from_serialized(
+        "X--------",
+        "O"
+    )
+
+    matchbox = menace.get_matchbox(board)
+
+    matchbox.choose_move = lambda: 0
+
+    _, mapping = canonicalize(board)
+
+    expected_move = canonical_to_actual_move(0, mapping)
+
+    actual_move = menace.choose_move(board)
+
+    assert actual_move == expected_move
