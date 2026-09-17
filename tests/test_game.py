@@ -1,5 +1,5 @@
 from menace.game import Game
-
+from menace.menace import Menace
 
 def test_game_starts_with_empty_board():
     game = Game()
@@ -17,3 +17,11 @@ def test_game_starts_with_empty_history():
     game = Game()
 
     assert game.history == []
+
+def test_game_can_make_menace_move():
+    game = Game()
+    menace = Menace()
+
+    game.menace_move(menace)
+
+    assert len(game.board.legal_moves()) == 8
