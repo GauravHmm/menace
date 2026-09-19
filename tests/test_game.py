@@ -25,3 +25,11 @@ def test_game_can_make_menace_move():
     game.menace_move(menace)
 
     assert len(game.board.legal_moves()) == 8
+
+def test_game_records_menace_move():
+    game = Game()
+    menace = Menace()
+
+    game.menace_move(menace)
+
+    assert len(game.history) == 1

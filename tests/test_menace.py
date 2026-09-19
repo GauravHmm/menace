@@ -106,7 +106,7 @@ def test_menace_can_choose_move():
     menace = Menace()
     board = Board()
 
-    move = menace.choose_move(board)
+    move,_ = menace.choose_move(board)
 
     assert move in board.legal_moves()
 
@@ -126,6 +126,18 @@ def test_menace_maps_canonical_move_to_actual_move():
 
     expected_move = canonical_to_actual_move(0, mapping)
 
-    actual_move = menace.choose_move(board)
+    actual_move,_ = menace.choose_move(board)
 
     assert actual_move == expected_move
+
+def test_menace_returns_move_and_learning_record():
+    menace=Menace()
+    board=Board()
+
+    move,record=menace.choose_move(board)
+
+    state,canonical_move=record
+
+    assert move in board.legal_moves()
+    assert state=="---------"
+    assert canonical_move in (0,1,4)

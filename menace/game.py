@@ -7,5 +7,6 @@ class Game:
         self.history = []
 
     def menace_move(self,menace):
-        move=menace.choose_move(self.board)
-        self.board.make_move(move)
+        actual_move,record=menace.choose_move(self.board)
+        self.history.append(record)
+        self.board.make_move(actual_move)
