@@ -33,3 +33,8 @@ def test_game_records_menace_move():
     game.menace_move(menace)
 
     assert len(game.history) == 1
+
+def test_game_starts_not_over():
+    game=Game()
+
+    assert game.is_over()==False

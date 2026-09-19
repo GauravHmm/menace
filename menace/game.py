@@ -10,3 +10,6 @@ class Game:
         actual_move,record=menace.choose_move(self.board)
         self.history.append(record)
         self.board.make_move(actual_move)
+
+    def is_over(self):
+        return self.board.is_game_over()
