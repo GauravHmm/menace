@@ -62,7 +62,7 @@ class Menace:
             elif result=="draw":
                 matchbox.add_beads(move,1)
             else:
-                matchbox.remove_bead(move,1)
+                matchbox.remove_bead(move)
 
 
 
