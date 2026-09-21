@@ -156,3 +156,19 @@ def test_menace_rewards_moves_after_win():
     menace.learn([record],"win")
 
     assert matchbox.beads[canonical_move]==before+3
+
+def test_menace_rewards_moves_after_draw():
+    menace=Menace()
+    board=Board()
+
+    move,record=menace.choose_move(board)
+
+    state,canonical_move=record
+    matchbox=menace.matchboxes[state]
+
+    before=matchbox.beads[canonical_move]
+
+    menace.learn([record],"draw")
+
+    assert matchbox.beads[canonical_move]==before+1
+
