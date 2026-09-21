@@ -53,4 +53,17 @@ class Menace:
 
         return actual_move,(state,canonical_move)
 
+    def learn(self,history,result):
+        for state,move in history:
+            matchbox=self.matchboxes[state]
+
+            if result=="win":
+                matchbox.add_beads(move,3)
+            elif result=="draw":
+                matchbox.add_beads(move,1)
+            else:
+                matchbox.remove_bead(move,1)
+
+
+
 

@@ -141,3 +141,18 @@ def test_menace_returns_move_and_learning_record():
     assert move in board.legal_moves()
     assert state=="---------"
     assert canonical_move in (0,1,4)
+
+def test_menace_rewards_moves_after_win():
+    menace=Menace()
+    board=Board()
+
+    move,record=menace.choose_move(board)
+
+    state,canonical_move=record
+    matchbox=menace.matchboxes[state]
+
+    before=matchbox.beads[canonical_move]
+
+    menace.learn([record],"win")
+
+    assert matchbox.beads[canonical_move]==before+3
