@@ -50,3 +50,22 @@ def test_game_result_when_x_wins():
     )
 
     assert game.result() == "win"
+def test_game_result_when_o_wins():
+    game = Game()
+
+    game.board = Board.from_serialized(
+        "OOOXX----",
+        "X"
+    )
+
+    assert game.result() == "loss"
+
+def test_game_result_when_draw():
+    game = Game()
+
+    game.board = Board.from_serialized(
+        "XOXOOXXXO",
+        "X"
+    )
+
+    assert game.result() == "draw"
