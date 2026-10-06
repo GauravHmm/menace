@@ -13,3 +13,12 @@ class Game:
 
     def is_over(self):
         return self.board.is_game_over()
+
+    def result(self):
+        if not self.is_over():
+            raise ValueError("Game is not over")
+        if self.board.is_draw():
+            return "draw"
+        if self.board.winner() == "X":
+            return "win"
+        return "loss"

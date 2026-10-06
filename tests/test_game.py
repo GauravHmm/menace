@@ -1,5 +1,7 @@
 from menace.game import Game
 from menace.menace import Menace
+from menace.board import Board
+
 
 def test_game_starts_with_empty_board():
     game = Game()
@@ -38,3 +40,13 @@ def test_game_starts_not_over():
     game=Game()
 
     assert game.is_over()==False
+
+def test_game_result_when_x_wins():
+    game = Game()
+
+    game.board = Board.from_serialized(
+        "XXXOO----",
+        "X"
+    )
+
+    assert game.result() == "win"
