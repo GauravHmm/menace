@@ -22,3 +22,7 @@ class Game:
         if self.board.winner() == "X":
             return "win"
         return "loss"
+
+    def learn(self,menace):
+        result=self.result()
+        menace.learn(self.history,result)

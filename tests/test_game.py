@@ -69,3 +69,24 @@ def test_game_result_when_draw():
     )
 
     assert game.result() == "draw"
+
+def test_game_can_teach_menace_after_game():
+    game = Game()
+    menace = Menace()
+
+    game.board = Board.from_serialized(
+        "XXXOO----",
+        "X"
+    )
+
+    game.history = [
+        ("---------", 0)
+    ]
+
+    matchbox = menace.get_matchbox(Board())
+
+    before = matchbox.beads[0]
+
+    game.learn(menace)
+
+    assert matchbox.beads[0] == before + 3
