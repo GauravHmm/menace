@@ -186,3 +186,27 @@ def test_menace_penalizes_moves_after_loss():
     menace.learn([record],"loss")
 
     assert matchbox.beads[canonical_move]==before-1
+
+def test_menace_learns_from_entire_history():
+    menace = Menace()
+    board = Board()
+
+    _, record1 = menace.choose_move(board)
+
+    # Make a second MENACE decision from a different valid state.
+    board.make_move(1)  # O's move
+    _, record2 = menace.choose_move(board)
+
+    state1, move1 = record1
+    state2, move2 = record2
+
+    matchbox1 = menace.matchboxes[state1]
+    matchbox2 = menace.matchboxes[state2]
+
+    before1 = matchbox1.beads[move1]
+    before2 = matchbox2.beads[move2]
+
+    menace.learn([record1, record2], "win")
+
+    assert matchbox1.beads[move1] == before1 + 3
+    assert matchbox2.beads[move2] == before2 + 3
