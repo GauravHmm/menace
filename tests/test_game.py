@@ -1,7 +1,7 @@
 from menace.game import Game
 from menace.menace import Menace
 from menace.board import Board
-
+import pytest
 
 def test_game_starts_with_empty_board():
     game = Game()
@@ -90,3 +90,10 @@ def test_game_can_teach_menace_after_game():
     game.learn(menace)
 
     assert matchbox.beads[0] == before + 3
+
+def test_game_cannot_teach_menace_before_game_is_over():
+    game = Game()
+    menace = Menace()
+
+    with pytest.raises(ValueError):
+        game.learn(menace)
